@@ -1,0 +1,34 @@
+
+[spawar2@engr-ras-101 ~]$ add mysql
+
+MySQL client has been added to your environment
+
+This application is supported by CSC.
+send any problem reports to csc_help@ncsu.edu
+
+add.sh: Type exit to return to previous shell instance.
+[spawar2@engr-ras-101 ~]$ add jdk
+
+Java SE Development Kit 8u45 has been added to your environment
+
+Commands:  ControlPanel appletviewer extcheck idlj jar     
+           jarsigner java javac javadoc javafxpackager javah javap javapackager
+           java-rmi.cgi javaws jcmd jconsole jcontrol jdb jdeps jhat jinfo jjs jmap
+           jmc jps jrunscript jsadebugd jstack jstat jstatd jvisualvm keytool
+           native2ascii orbd pack200 policytool rmic rmid rmiregistry
+           schemagen serialver servertool tnameserv unpack200 wsgen wsimport
+           xjc
+
+Manpages for most commands are availible by typing man <commandname>
+
+Package installed by ITECS, eoshelp@ncsu.edu
+
+add.sh: Type exit to return to previous shell instance.
+[spawar2@engr-ras-101 ~]$ javac firstExample.java
+[spawar2@engr-ras-101 ~]$ java firstExample
+Oscar  23.4
+Max  21.8
+Tiger  13.3
+Sam  24.3
+Simba  19.8
+Lucy  22.4

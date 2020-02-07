@@ -1,0 +1,21 @@
+#tradmeasures #readingreaction #UX #Experiments
+
+Greenberg, S., & Buxton, B. (2008, April). Usability evaluation considered harmful (some of the time). In Proceedings of the SIGCHI conference on Human factors in computing systems (pp. 111-120). ACM.
+ 
+
+ This paper has opened an new research debate, which is very known to seasoned researchers (HCI domain) but unknown to users like me. Basically use of Usability testing has been questioned which author means it should be used where it is meant to be. 
+
+ Wrong use of usability testing might break future of a product as it is hampering flow of creativity. Usability testing done at early stages of product development might affect growth and to explain this author has provided few examples such as the criteria for choosing papers in internation journals.
+
+ A major takeaway from this paper is that usability testing should be done when idea is well framed which I found very useful and would like to use too. In the "Innovation and culture" section author has focused on when technology flourishes then people tends to embrace it. Take example of space technology, initially only developed contries where interested in investment but not as success rate is incresing developing nations like China and India have started making investment. This effect is much more like so called "peer-pressure".
+ 
+
+
+
+ -------------------------------------------------
+ #experiments #classParticipation #tradmeasures
+
+ Lecture (27/01) 
+ Professor's lecture was very well organized which helps in understanding concepts of tradmeasures. starting from history then couple of examples including founder of NCSU's stat department and then brief discussion on causality, feasibility, and validity. 
+
+The exercise was really very helpful during which we had to think about designing a new website while keeping in mind user experience and then perform testing including who will be participating, how to evaluate results from the feedbacks.
