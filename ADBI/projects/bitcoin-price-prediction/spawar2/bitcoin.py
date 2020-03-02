@@ -55,11 +55,11 @@ def computeDelta(wt, X, Xi):
     # YOUR CODE GOES HERE
     weight = wt
     n = len(X) - 1
-    mean_x = np.mean(X[:-1])
+    mean_along_x = np.mean(X[:-1])
     std_x = np.std(X[:-1])
-    ratio = 0
-    nr = 0
-    dr = 0
+    # ratio = 0
+    temp1 = 0
+    temp2 = 0
     
     
     for _, item in Xi.iterrows() :
@@ -69,14 +69,15 @@ def computeDelta(wt, X, Xi):
         temp = 0
 
         for i in range(n):
-            temp += (X[i] - mean_x) * (item[i] - new_mean)
-
+            a =  (X[i] - mean_along_x) 
+            b =  (item[i] - new_mean)
+            temp += a * b
         sim = temp // (n * std_x * new_std)
-        fac = math.exp(weight * sim)
-        dr += fac
-        nr += yi * fac
+        temp2 += math.exp(weight * sim)
+        # temp2 += fac
+        temp1 += yi * temp2
         
-    return nr / dr
+    return temp1 / temp2
 
 
 
@@ -113,8 +114,8 @@ trainData = pd.DataFrame(d)
 # Use the statsmodels ols function.
 # Use the variable name model for your fitted model
 # YOUR CODE HERE
-modd = smf.ols(formula='deltaP ~ deltaP90 + deltaP180 + deltaP360', data=trainData)
-model = modd.fit()
+model_temp = smf.ols(formula='deltaP ~ deltaP90 + deltaP360 + deltaP180', data=trainData)
+model = model_temp.fit()
 
 # Print the weights from the model
 print(model.params)
@@ -129,14 +130,15 @@ test_delta_90 = np.empty(0)
 test_delta_180 = np.empty(0)
 test_delta_360 = np.empty(0)
 
-for _, i in enumerate(len(train1_90.index)) :
-    test_delta_90 = np.append(test_delta_90, computeDelta(weigh,test_90.iloc[i],train1_90))
-for _, i in enumerate(len(train1_180.index)) :
-    test_delta_180 = np.append(test_delta_180, computeDelta(weigh,test_180.iloc[i],train1_180))
-for _, i in enumerate(len(train1_360.index)) :
-    test_delta_360 = np.append(test_delta_360, computeDelta(weigh,test_360.iloc[i],train1_360))
+def helper():
+    for _, i in enumerate(train1_90):
+        test_delta_90 = np.append(test_delta_90, computeDelta(weigh,test_90.iloc[i],train1_90))
+    for _, i in enumerate(train1_180):
+        test_delta_180 = np.append(test_delta_180, computeDelta(weigh,test_180.iloc[i],train1_180))
+    for _, i in enumerate(train1_360):
+        test_delta_360 = np.append(test_delta_360, computeDelta(weigh,test_360.iloc[i],train1_360))
 
-
+helper()
 # Actual deltaP values for test data.
 # YOUR CODE HERE (use the right variable names so the below code works)
 
