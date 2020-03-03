@@ -7,6 +7,8 @@ import pandas as pd
 import numpy as np
 from collections import defaultdict
 from copy import deepcopy
+import random
+
 
 class Adwords:
     """
@@ -15,37 +17,42 @@ class Adwords:
     """
 
     def __init__(self):
-        #Read dataset
+        # Read dataset
+        random.seed(0)
         self.df = pd.read_csv("bidder_dataset.csv")
-        self.queries = pd.read_csv("queries.txt", header=None, names=["queries"])
+        self.queries = pd.read_csv(
+            "queries.txt", header=None, names=["queries"])
         # print(self.queries.values)
-        adv_bidder =  self.df.loc[(self.df.Budget > 0), ['Budget', 'Advertiser']]
+        adv_bidder = self.df.loc[(self.df.Budget > 0), [
+            'Budget', 'Advertiser']]
         # print(adv_bidder)
 
-        self.map = defaultdict(int) #map of adv and budget
+        self.map = defaultdict(int)  # map of adv and budget
         self.total_budget = 0
         for i in adv_bidder.values:
             b, adv = i
             self.map[int(adv)] += b
-            self.total_budget += b
+            self.total_budget += b          #optimal revenue
         # print(map, total_budget)
-        
-        #Now map queries to bid
+
+        # Now map queries to bid
         self.query_map = defaultdict(list)
         for item in self.queries.values:
             # print(item)
             query = item[0]
-            if query in self.query_map:  continue
+            if query in self.query_map:
+                continue
             self.query_map[query] = self.df.loc[(self.df.Keyword == query)].\
-                        sort_values(by = "Bid Value", ascending=0).values
+                sort_values(by="Bid Value", ascending=0).values
         # print(self.query_map)
-            
+
     def greedy(self):
         """ Calculate greedy revenue """
         greedy_revenue = 0
         # temp_budget = deepcopy(self.map)
         i = 0
-        while i < 2:
+        while i < 100:
+            random.shuffle(self.queries.values)
             temp_budget = deepcopy(self.map)
             for _, j in enumerate(self.queries.values):
                 flag = 0
@@ -55,10 +62,11 @@ class Adwords:
                     if temp_budget[adv] - bid > 0:
                         temp_budget[adv] -= bid
                         greedy_revenue += bid
-                        if flag + 1:    break
+                        if flag + 1:
+                            break
                 # print(j)
             i += 1
-        rev = greedy_revenue / 2
+        rev = greedy_revenue / 100
         return rev
 
     def msvv(self):
@@ -70,8 +78,8 @@ class Adwords:
             """Calculate MSVV value"""
             return bid * (1 - np.exp(100 / temp_budget[adv]))
 
-
-        while i < 2:
+        while i < 100:
+            random.shuffle(self.queries.values)
             temp_budget = deepcopy(self.map)
             for _, j in (enumerate(self.queries.values)):
                 bid_org, adv_org, msvv = 0, 0, 0
@@ -83,13 +91,14 @@ class Adwords:
                             bid_org, adv_org, msvv = bid, adv, new_val
                 msvv_rev += bid
             i += 1
-        return msvv_rev / 2
+        return msvv_rev / 100
 
     def balance(self):
         """BALANCE ALGO """
         i = 0
         balance_rev = 0
-        while i < 2:
+        while i < 100:
+            random.shuffle(self.queries.values)
             temp_budget = deepcopy(self.map)
             for _, j in enumerate(self.queries.values):
                 bal, org_bid, advert = 0, 0, 0
@@ -101,12 +110,13 @@ class Adwords:
                     temp_budget[adv] -= org_bid
                     balance_rev += org_bid
             i += 1
-        return balance_rev / 2
+        return balance_rev / 100
+
 
 if __name__ == "__main__":
     print("\nAdWords Placement Problem via " + "\n \
-    "+ "Online Bipartite Graph Matching\n")
-    
+    " + "Online Bipartite Graph Matching\n")
+
     arguments = sys.argv
     if len(arguments) > 1:
         algo_type = arguments[1]
@@ -117,15 +127,15 @@ if __name__ == "__main__":
 
     # print(algo_type)
     rev = 0
-    if algo_type == "Greedy":
+    if algo_type == "greedy":
         print("Greedy")
         rev = ad.greedy()
-        
-    elif algo_type == "MSVV":
+
+    elif algo_type == "msvv":
         print("MSVV")
         rev = ad.msvv()
-        
-    elif algo_type == "Balance":
+
+    elif algo_type == "balance":
         print("Balance")
         rev = ad.msvv()
     else:
@@ -134,4 +144,5 @@ if __name__ == "__main__":
         print("2. MSVV")
         print("3. Balance")
         sys.exit(0)
-    print(f"{algo_type} -> {round(rev, 2)}")
+    print(f"{algo_type}'s revenue' : {round(rev, 3)}")
+    print(f"Competitive ratio:{round(rev / ad.total_budget, 3)}")
