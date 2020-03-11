@@ -36,9 +36,54 @@ class Solution:
             # # print(ind, item)
             # break
         # print(list(self.g.vs))
-
+        self.phase1()
+    
+    def phase1(self):
+        """Phase 1 of SAC 1"""
+        def get_dq_newman(vertex=None, community=None):
+            old = self.g.modularity(total_comm, weights="weight")
+            temp = total_comm[vertex]
+            total_comm[vertex] = community
+            new = self.g.modularity(total_comm, weights="weight")
+            total_comm[vertex] = temp
+            res = new - old
+            return res
         
+        def dq_header(vertex=c1, community=c2, similarity_mat=simi):
+            sum_, count = 0, 0
+            i = 0
+            n = len(self.g.vs)
+            while i < n:
+                total_comm[i] = community
+                sum_ += similarity_mat[vertex][i]
+                count += 1
+                i += 1
+            temp = count // n
+            return sum_ // temp
 
+
+        print("Phase - 1")
+
+        n = len(self.g.vs)  #n = 324
+        total_comm = list(range(n))
+
+        for _ in range(15):
+        # og_mod = self.g.as_undirected().modularity(total_comm)
+        # print(og_mod)
+            for c1 in total_comm:
+                comm_vertex = total_comm[c1]
+                maxi = float('inf')
+                maxi_community = None
+                for c2 in range(n):
+                    if c1 == c2:    continue
+                    dq = self.alpha * get_dq_newman(c1, c2) *\
+                        (1 - self.alpha) * dq_header(c1, c2, simi)
+                if maxi > 0:
+                    total_comm[c1] = dq
+                    maxi_community = c2
+                else:
+                    break
+        return total_comm
 
 
 if __name__ == "__main__":
