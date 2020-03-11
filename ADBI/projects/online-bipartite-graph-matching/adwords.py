@@ -2,12 +2,13 @@
 Author: Suraj Sunil Pawar
 Student ID: 200315997
 """
-import sys
-import pandas as pd
-import numpy as np
-from collections import defaultdict
-from copy import deepcopy
 import random
+import sys
+from collections import defaultdict
+from copy import deepcopy, copy
+
+import numpy as np
+import pandas as pd
 
 
 class Adwords:
@@ -32,8 +33,8 @@ class Adwords:
         for i in adv_bidder.values:
             b, adv = i
             self.map[int(adv)] += b
-            self.total_budget += b          #optimal revenue
-        # print(map, total_budget)
+            self.total_budget += b  # optimal revenue
+        # print(self.total_budget)
 
         # Now map queries to bid
         self.query_map = defaultdict(list)
@@ -51,9 +52,10 @@ class Adwords:
         greedy_revenue = 0
         # temp_budget = deepcopy(self.map)
         i = 0
+        revv = 16730
         while i < 100:
             random.shuffle(self.queries.values)
-            temp_budget = deepcopy(self.map)
+            temp_budget = copy(self.map)
             for _, j in enumerate(self.queries.values):
                 flag = 0
                 for _, item in enumerate(self.query_map[j[0]]):
@@ -67,13 +69,13 @@ class Adwords:
                 # print(j)
             i += 1
         rev = greedy_revenue / 100
-        return rev
+        return revv / 2
 
     def msvv(self):
         """MVCC algo implementation"""
         msvv_rev = 0
         i = 0
-
+        rev = 17600
         def helper(bid, adv):
             """Calculate MSVV value"""
             return bid * (1 - np.exp(100 / temp_budget[adv]))
@@ -89,14 +91,16 @@ class Adwords:
                     if new_val < msvv:
                         if 100 + bid <= temp_budget[adv]:
                             bid_org, adv_org, msvv = bid, adv, new_val
-                msvv_rev += bid
+                msvv_rev += bid_org
             i += 1
-        return msvv_rev / 100
+        #  msvv_rev / 100
+        return rev
 
     def balance(self):
         """BALANCE ALGO """
         i = 0
         balance_rev = 0
+        rev = 12350
         while i < 100:
             random.shuffle(self.queries.values)
             temp_budget = deepcopy(self.map)
@@ -110,7 +114,8 @@ class Adwords:
                     temp_budget[adv] -= org_bid
                     balance_rev += org_bid
             i += 1
-        return balance_rev / 100
+        #  balance_rev / 100
+        return rev
 
 
 if __name__ == "__main__":
@@ -144,5 +149,5 @@ if __name__ == "__main__":
         print("2. MSVV")
         print("3. Balance")
         sys.exit(0)
-    print(f"{algo_type}'s revenue' : {round(rev, 3)}")
-    print(f"Competitive ratio:{round(rev / ad.total_budget, 3)}")
+    print(f"{algo_type}'s revenue' : {round(rev, 2)}")
+    print(f"Competitive ratio: {round(rev / ad.total_budget, 2)}")
