@@ -9,7 +9,7 @@ library("akmeans")
 # Beta = Influence Propagation Rate
 
 influence_propagation <- function(graph, comm, beta=0.75){
-  output = c()
+  output = c()   
   v = vcount(graph)
   nodes <- data.frame(1:v)
   colnames(nodes) <- c("Id")
