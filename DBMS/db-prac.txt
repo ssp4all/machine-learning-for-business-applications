@@ -1,0 +1,23 @@
+Steps to start connect MariaDB
+
+ssh spawar2@remote.eos.ncsu.edu
+Enter Unity-Id password
+Add Mysql and Add JDK
+mysql -u spawar2 -p -h classdb2.csc.ncsu.edu
+enter student-id
+Use spawar2
+
+
+
+create table part(
+	manu int,	
+	pclass int,
+	comanu int,
+	copclass int,
+	primary key(manu, pclass),
+	foreign key (comanu, copclass)	references part(manu, pclass)	
+);
+
+insert into part values(1, 1, NULL, NULL);
+insert into part values(2, 3, 1, 1);
+insert into part values(NULL, 5, 2, 1);
