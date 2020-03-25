@@ -1,0 +1,188 @@
+
+MariaDB [atiwari4]> INSERT INTO Publication VALUES (6, 'ZigWheels', 'Cars', 'Magazine', 'Monthly');
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [atiwari4]> UPDATE Publication SET periodicity = 'Weekly' where publication_id = 3;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [atiwari4]> INSERT INTO worksFor VALUES (2,5), (1, 5);
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [atiwari4]> SELECT * FROM Publication WHERE publication_id IN (SELECT publication_id FROM worksFor WHERE contributor_id = 1);
++----------------+---------------------+----------------+----------+-------------+
+| publication_id | title               | typical_topics | type     | periodicity |
++----------------+---------------------+----------------+----------+-------------+
+|              2 | Pride and Prejudice | Fiction        | Book     | Once        |
+|              5 | Vogue               | Fashion        | Magazine | Weekly      |
++----------------+---------------------+----------------+----------+-------------+
+2 rows in set (0.00 sec)
+
+MariaDB [atiwari4]> INSERT INTO consistOf VALUES (3, 7);
+Query OK, 1 row affected (0.00 sec)
+
+-----------------------------------------------------------------------------------
+
+MariaDB [atiwari4]>  INSERT INTO Book VALUES (123456788, 1, 5,  '2003-06-21',' 2003-11-21', 3);
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [atiwari4]> UPDATE Book SET edition_no = 1 where isbn = 123456789;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+MariaDB [atiwari4]> DELETE FROM Book WHERE isbn = 123456788;
+Query OK, 1 row affected (0.01 sec)
+
+MariaDB [atiwari4]> INSERT INTO consistOf VALUES (4, 7);
+Query OK, 1 row affected (0.00 sec)
+
+
+MariaDB [atiwari4]> UPDATE consistOf SET article_id = 7 where issue_id = 10;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+MariaDB [atiwari4]> UPDATE Article SET content='Black Widow is back with a new s*i*' and date_of_creation = '2020-02-29' where article_id=6;
+Query OK, 1 row affected, 2 warnings (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 2
+
+MariaDB [atiwari4]> INSERT INTO Chapter VALUES (9, 9, 'Black Widow', 'The best movie of 2020', 987654321);
+Query OK, 1 row affected (0.01 sec)
+
+MariaDB [atiwari4]> UPDATE Chapter SET content='The best Marvel movie of 2020' where chapter_id = 2;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+MariaDB [atiwari4]> UPDATE Article SET content = 'Who is Spiderman ?' where article_id = 4;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [atiwari4]> SELECT * FROM Book WHERE  publication_date = '2003-07-21';
++-----------+----------------+--------+------------------+------------------+------------+
+| isbn      | publication_id | author | date_of_creation | publication_date | edition_no |
++-----------+----------------+--------+------------------+------------------+------------+
+| 123456789 |              1 |      5 | 2003-06-21       | 2003-07-21       | 1          |
++-----------+----------------+--------+------------------+------------------+------------+
+1 row in set (0.00 sec)
+
+MariaDB [atiwari4]> SELECT * FROM Book WHERE  author = 5;
++-----------+----------------+--------+------------------+------------------+------------+
+| isbn      | publication_id | author | date_of_creation | publication_date | edition_no |
++-----------+----------------+--------+------------------+------------------+------------+
+| 123456789 |              1 |      5 | 2003-06-21       | 2003-07-21       | 1          |
+| 987654321 |              1 |      5 | 2007-07-05       | 2007-08-05       | 2          |
++-----------+----------------+--------+------------------+------------------+------------+
+2 rows in set (0.00 sec)
+
+MariaDB [atiwari4]> INSERT INTO Pays VALUES (1, 5, 6969, 2020-03-20);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+MariaDB [atiwari4]> SELECT * FROM Pays WHERE contributor_id = 2;
++----------------+----------------+--------+--------------+
+| contributor_id | publication_id | amount | payment_date |
++----------------+----------------+--------+--------------+
+|              2 |              3 |   1200 | 2020-01-05   |
++----------------+----------------+--------+--------------+
+
+------------------------------------------------------------------------------------------------
+
+MariaDB [atiwari4]> INSERT INTO Distributor VALUES(5, 'XYZ', 'bookstore', '2364-CC-NC-27606', 'California', 'John Doe', 1200, 987258964);
+Query OK, 1 row affected (0.01 sec)
+
+MariaDB [atiwari4]> UPDATE Distributor SET phone_number = 987258968 WHERE distributor_id = 1;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+MariaDB [atiwari4]> DELETE FROM Distributor WHERE distributor_id = 5;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [atiwari4]> INSERT INTO `Order` VALUES(6,30, 40, '2020-03-04', 69, 741258963, NULL, 'Pending', 2);
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [atiwari4]> SELECT SUM(price* no_of_copies) AS Total_Cost FROM `Order` WHERE order_id = 2;
++------------+
+| Total_Cost |
++------------+
+|        700 |
++------------+
+1 row in set (0.00 sec)
+
+------------------------------------------------------------------------------------------------
+Reports
+
+1. GEnerate monthly report query not working
+
+MariaDB [atiwari4]> SELECT SUM(no_of_copies*price) AS total FROM `Order`;
++-------+
+| total |
++-------+
+| 16100 |
++-------+
+1 row in set (0.00 sec)
+
+MariaDB [atiwari4]> SELECT SUM(shipping_cost) FROM `Order`;
++--------------------+
+| SUM(shipping_cost) |
++--------------------+
+|                100 |
++--------------------+
+1 row in set (0.00 sec)
+
+MariaDB [atiwari4]> SELECT SUM(amount) FROM `Pays`;
++-------------+
+| SUM(amount) |
++-------------+
+|      116060 |
++-------------+
+1 row in set (0.00 sec)
+
+MariaDB [atiwari4]> SELECT COUNT(*) AS Number_of_Distributors  FROM Distributor;
++------------------------+
+| Number_of_Distributors |
++------------------------+
+|                      4 |
++------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [atiwari4]> SELECT SUM(price*no_of_copies) 
+    -> FROM `Order` 
+    -> JOIN `Distributor` ON Order.distributor_id=Distributor.distributor_id
+    -> GROUP BY city;
++-------------------------+
+| SUM(price*no_of_copies) |
++-------------------------+
+|                    7200 |
+|                    1500 |
+|                    7400 |
++-------------------------+
+
+MariaDB [atiwari4]> SELECT SUM(amount) AS Total_Amount FROM Pays WHERE payment_date BETWEEN '2019-12-30' and '2020-03-04';
++--------------+
+| Total_Amount |
++--------------+
+|        67200 |
++--------------+
+1 row in set (0.00 sec)
+
+
+
+MariaDB [atiwari4]> SELECT SUM(amount), Publication.type, Contributor.designation
+    -> FROM `Pays` 
+    -> JOIN `Publication` ON Pays.publication_id = Publication.publication_id 
+    -> JOIN `Contributor` ON Pays.contributor_id = Contributor.contributor_id
+    -> where Publication.type IN (SELECT DISTINCT(type) FROM Publication)
+    ->  AND Contributor.designation IN (SELECT DISTINCT(designation) FROM Distributor)
+    -> GROUP BY Publication.type, Contributor.designation;
++-------------+----------+-------------+
+| SUM(amount) | type     | designation |
++-------------+----------+-------------+
+|       32000 | Book     | Author      |
+|       66000 | Book     | Editor      |
+|        6969 | Book     | Freelance   |
+|        1200 | Journal  | Freelance   |
+|        6969 | Magazine | Editor      |
+|        2922 | Magazine | Freelance   |
++-------------+----------+-------------+
+6 rows in set (0.00 sec)
+
+
+
