@@ -26,7 +26,7 @@ Projects ([source-code](https://github.com/ssp4all/Sem2/tree/master/ADBI/project
         - Word2vec-and-doc2vec-sentiment-analysis 
 
 ## Database Management System (DBMS)
-Final Project [source-code](https://github.com/ssp4all/dbms-wolfpub-db)
+Final Project ([source-code](https://github.com/ssp4all/dbms-wolfpub-db))
     
     A publication house database management system using Java and MariaDB
 
