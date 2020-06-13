@@ -1,5 +1,5 @@
-# Sem2
-## Algorithms for Data Guided Business Intelligence (ADBI)
+# machine-learning-for-business-applications
+### Algorithms for Data Guided Business Intelligence (ADBI)
 Projects ([source-code](https://github.com/ssp4all/Sem2/tree/master/ADBI/projects))
     
     + Preprocessing 
@@ -25,11 +25,11 @@ Projects ([source-code](https://github.com/ssp4all/Sem2/tree/master/ADBI/project
         - Twitter-sentimental-analysis 
         - Word2vec-and-doc2vec-sentiment-analysis 
 
-## Database Management System (DBMS)
+### Database Management System (DBMS)
 Final Project ([source-code](https://github.com/ssp4all/dbms-wolfpub-db))
     
     A publication house database management system using Java and MariaDB
 
-## User Experiences (UX)
+### User Experiences (UX)
 - [syllabus](http://uxclass.csc.ncsu.edu/p/topic-notes.html)
 - Final project
