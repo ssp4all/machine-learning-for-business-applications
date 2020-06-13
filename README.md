@@ -32,4 +32,4 @@ Final Project ([source-code](https://github.com/ssp4all/dbms-wolfpub-db))
 
 ## User Experiences (UX)
 - [syllabus](http://uxclass.csc.ncsu.edu/p/topic-notes.html)
-- Final project (not completed yet :( )
+- Final project
