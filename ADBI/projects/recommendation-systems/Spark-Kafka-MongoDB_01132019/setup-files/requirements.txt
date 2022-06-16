@@ -19,7 +19,7 @@ tldextract
 wikipedia
 findspark
 iso8601
-notebook==6.1.5
+notebook==6.4.12
 beautifulsoup4
 networkx
 jupyter
